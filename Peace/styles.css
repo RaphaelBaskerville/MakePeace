@@ -1,0 +1,22 @@
+.gameSquare {
+    display:inline-block;
+    color:white;
+    vertical-align: top;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #DCCAB8;
+}
+body {
+	background-color: white;
+}
+.gameBoard, .logo {
+
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.gameBoard {
+	border-style: solid;
+	border-color: #DCCAB8;
+	border-width : 50px;
+}
