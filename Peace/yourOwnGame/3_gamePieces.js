@@ -1,36 +1,26 @@
 (function() {
-  // Let's return to our gameBoard now. Step back up to just before we started the reduce mini-sprint to remind yourself what we were doing. 
-
-  // First, note that in this file we still have access to our gameBoard object. This is because in boardBasics.js we put it on the window object. You can test this by trying to print the gameBoard variable to the console:
-  // console.log('gameBoard object in gamePieces.js is:', gameBoard);
-
-  // Remember that we'd just used each and filter to find all the gamePieces on the board: "results after filter: [Array[0], Array[0], Array[0], Array[3], Array[0], Array[2], Array[0], Array[0]]" for a gameBoard that has three gamePieces on row 3 and two game pieces on row 5.
-  // Having that information scattered throughout a bunch of different arrays seems messy. You can probably think of plenty of cases where we'd want to have all that information collected into a single array. 
-    // Wait, that's starting to sound like reduce! We're taking a collection of a bunch of things, and reducing it down to a single thing. 
-      // Can you think of a way we could reduce an array filled with arrays to a single array just filled with all the values contained in each subarray? 
-      // Hint: what if we tried passing in an empty array as the starting value?
-
-  // This ends our intro to the capstone project. By this point you should be pretty familiar with the gameBoard, the makePiece function, and all four of the main functional programming tools (each, map, filter, and reduce). From here on out, we're intentionally going to give you less guidance. One of the key skills to be a successful engineer is autonomy in accomplishing tasks that are given to you. We want you to get used to that feeling with these upcoming exercises. 
-
-
-  // 1. Create an array called piecesToAdd that holds the names of each of the pieces we'll create for each player. For example: ['kuddlyKoala', 'babyDino','babyDino', 'babyDino', 'fierceDragon', 'lazyPanda', 'lazyPanda']
-// var piecesToAdd = ['sf', 'oak'];
-  // 2. Create an array of the playerNames. For example: ['hermoineGranger', 'graceHopper']
-// var playerNames = ['Niners' , "Raiders"];
-
+  
 ////////////////////////////////////////////////////
 /////////Set Up GAME PIECES HERE///////////////////
 ///////////////////////////////////////////////////
+//create 2 different image arrays.  Not actually using these currently
+
+//X-Men gifs
   gameBoard.images2 = 
-["file:///Users/user/Desktop/capstoneTake2//images/wolvey.gif","file:///Users/user/Desktop/capstoneTake2//images/storm.gif","file:///Users/user/Desktop/capstoneTake2//images/gambit.gif","file:///Users/user/Desktop/capstoneTake2//images/iceman4.gif"];
+    ["file:///Users/user/Desktop/capstoneTake2//images/wolvey.gif","file:///Users/user/Desktop/capstoneTake2//images/storm.gif","file:///Users/user/Desktop/capstoneTake2//images/gambit.gif","file:///Users/user/Desktop/capstoneTake2//images/iceman4.gif"];
+//street fighter gifs    
   gameBoard.images =
-["file:///Users/user/Desktop/capstoneTake2//images/animation.gif","file:///Users/user/Desktop/capstoneTake2//images/vega.gif","file:///Users/user/Desktop/capstoneTake2//images/yoga.gif","file:///Users/user/Desktop/capstoneTake2//images/chunli.gif","file:///Users/user/Desktop/capstoneTake2//images/ryu.gif","file:///Users/user/Desktop/capstoneTake2//images/akuma.gif"]  
+    ["file:///Users/user/Desktop/capstoneTake2//images/animation.gif","file:///Users/user/Desktop/capstoneTake2//images/vega.gif","file:///Users/user/Desktop/capstoneTake2//images/yoga.gif","file:///Users/user/Desktop/capstoneTake2//images/chunli.gif","file:///Users/user/Desktop/capstoneTake2//images/ryu.gif","file:///Users/user/Desktop/capstoneTake2//images/akuma.gif"]  
+//picks a "random" number and assigns a player with an image for their pieces.  Not using this at the moment.   
 var player1piece = gameBoard.images.splice(anyNumMaker(),1);
+//picks a "random" number and assigns a player with an image for their pieces.  Not using this at the moment.
 var player2piece = gameBoard.images.splice(anyNumMaker(),1);
+
+
 //Define what happens when Player one clicks a gamepiece
 //Toggles board, and  highlights the two squares that player 1 can move to... ie. up. and to the left or right.
 gameBoard.player1Highlight = function (gameBoard , rowNum , columnNum) {
-//define click as the square that was clicked.
+//define clicked as the square that was clicked.
 var clicked = gameBoard[rowNum][columnNum];
   
 
@@ -63,7 +53,7 @@ var clicked = gameBoard[rowNum][columnNum];
 
       } else {
 
-          // If any piece is clicked on turn it off and reset the board
+          // If any piece/board is clicked on turn it off and reset the board
           gameBoard.isClicked = false;
           gameBoard.defaultBoard();
           console.log("toggle off")
@@ -71,6 +61,8 @@ var clicked = gameBoard[rowNum][columnNum];
     }
   renderGameBoard(gameBoard);
 }
+//We could probably make one highlight that works for both players, but it also might be more complicated that way.
+
 //Highlights the squares player2 can move to. ie down.
 gameBoard.player2Highlight = function (gameBoard , rowNum , columnNum) {
   console.log('player 2 clicked')
@@ -115,20 +107,22 @@ var clicked = gameBoard[rowNum][columnNum];
     }
   renderGameBoard(gameBoard);
 }
-var defaultPieces = function () {
-    _.each(gameBoard, function (row,rowNum){
 
+
+//Set up the initial position of the pieces 
+var defaultPieces = function () {
+  // iterate through each row and each square on that row
+    _.each(gameBoard, function (row,rowNum){
       _.each(row, function (square,sqrNum) {
-      // loop through every piece and assign an image using a random number as an index
+
+      // If on the last 2 rows assign the piece to player one, attach the highlight method to the piece here, and a yin yang gif.
         if (rowNum >= 6) { 
-          //random team of the same street fighter chars
-          // if ( (rowNum + sqrNum) % 2 === 0 ) makePiece(gameBoard, [rowNum,sqrNum], 'normal' , 'player1' , gameBoard.player1Highlight, player1piece);
-          // if ( (rowNum + sqrNum) % 2 === 0 ) makePiece(gameBoard, [rowNum,sqrNum], 'normal' , 'player1' , gameBoard.player1Highlight, gameBoard.images[(anyNumMaker())]);
+          // only assign every other square a piece
           if ( (rowNum + sqrNum) % 2 === 0 ) makePiece(gameBoard, [rowNum,sqrNum], 'normal' , 'player1' , gameBoard.player1Highlight, "https://upload.wikimedia.org/wikipedia/commons/a/ae/Yin_yang.gif");
+          //if on the first 2 rows, assign pieces for player 2
         } else if (rowNum <= 1) {
-          // if ( (rowNum + sqrNum) % 2 === 0 ) makePiece(gameBoard, [rowNum,sqrNum], 'normal' , 'player2' , gameBoard.player2Highlight, player2piece);
-          // if ( (rowNum + sqrNum) % 2 === 0 ) makePiece(gameBoard, [rowNum,sqrNum], 'normal' , 'player2' , gameBoard.player2Highlight, gameBoard.images2[anyNumMaker()]);
-if ( (rowNum + sqrNum) % 2 === 0 ) makePiece(gameBoard, [rowNum,sqrNum], 'normal' , 'player2' , gameBoard.player2Highlight, "http://graphics.elysiumgates.com/images/peaceindextitlegraphic.gif");        }
+          //only on every other square
+          if ( (rowNum + sqrNum) % 2 === 0 ) makePiece(gameBoard, [rowNum,sqrNum], 'normal' , 'player2' , gameBoard.player2Highlight, "http://graphics.elysiumgates.com/images/peaceindextitlegraphic.gif");        }
       })
   })
 }
@@ -158,39 +152,44 @@ var squaresWithPieces = _.map (gameBoard , function (row,rowNum) {
 
 // console.log("squares with pieces: " , squaresWithPieces);
 
+
+//Learning how to flatten an array. 
+
 //Create a new array of position arrays from squaresWithPieces
 var posMap = _.reduce (squaresWithPieces , function (acc, arr , arrNum) {
-
+  //set an array that we can push into as the accumulation.
   var pushArr = acc;
+  //push each element in the sub array of sub arrays into our new array
   _.each (arr , function (pos) { pushArr.push(pos) });
-  
+  //return the push array so it is stored as the accumulation.
   return pushArr;
 
 }, []);
 
 // console.log(posMap);
 
-
+// Use reduce to create an object that has a tally of all our gamePieces. For example, the result might be: 
 var pieceCount = _.reduce (gameBoard , function (acc,row,rowNum){
-  var counter = acc;
-  _.reduce (row , function  (acc2,square,sqrNum) {
-    if (square.gamePiece) {
-      var piece = square.gamePiece
-      if (counter[piece.typeOfPiece]) counter[piece.typeOfPiece] ++
-      else counter[piece.typeOfPiece] = 1
-    }
-  })
-  return counter;
-}, { })
-// console.log(pieceCount)
-  // 6. Use reduce to create an object that has a tally of all our gamePieces. For example, the result might be: 
-  // { babyDino: 3,
-  //   impetutousDragon: 2,
-  //   scaredKitty: 4,
-  //   hobblingPirate:8,
-  //   groupHuggers:12 }
-    // You should be able to do this from scratch by just using reduce inside of another reduce if you're feeling ambitious!
+          // Assign counter as our accumulation.
+          var counter = acc;
+          //inner reduce acts as a filter not a reduce.
+          //takes in a row and iterates through each square.
+          _.reduce (row , function  (acc2,square,sqrNum) {
+              // if there is a piece on the square
+              if (square.gamePiece) {
+                //name the piece piece 
+                var piece = square.gamePiece
+                //if the counterobject has a property key for this type of object, increment it.
+                if (counter[piece.typeOfPiece]) counter[piece.typeOfPiece] ++
+                //if the property doesnt exist, create it and set it to 1.
+                else counter[piece.typeOfPiece] = 1
+              }
+          })
+          //after the inner reduce has checked a row, return the counter object 
+          //so it will be saved as the accumulated for the next iteration.
+          return counter;
+      }, { })
 
-  // CARRY ON...
-  // You're doing great!!! Go ahead and check out the file called '4_gamePlay.js' in the yourOwnGame folder for more fun!
+// console.log(pieceCount)
+
 })();
