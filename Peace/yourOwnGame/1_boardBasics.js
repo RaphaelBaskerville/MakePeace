@@ -2,8 +2,8 @@
   ///////////////////////////////////////////
   ///////set up board heere//////////////////
   ///////////////////////////////////////////
-  //Use two (nested) each loops to add these pieces to the board. Remember that we have the makePiece function! 
 window.gameBoard = makeGameBoard(8);
+  //Use two (nested) each loops to add these pieces to the board. Remember that we have the makePiece function! 
 //////////////////////////////////////////
 gameBoard.defaultBoard = function () {
   gameBoard.isClicked = false;
@@ -11,7 +11,7 @@ gameBoard.defaultBoard = function () {
     _.each(row, function (square, sqrNum) {
       //set toggle off on every square
       square.isClicked = false;
-      //first and last rows black
+      //first and last rows brown
         if (rowNum === 0 || rowNum === 7) square.color = "#B89470";
       //second and third rows red
         if (rowNum === 1 || rowNum === 2) square.color = "#cc0000";
@@ -28,9 +28,16 @@ gameBoard.defaultBoard = function () {
   _.each (gameBoard ,function (row, y){
     _.each(row, function (square, x){
       //if the sum of the square's coordinates is even make that square white.
-      if ((y + x) % 2 === 0) {
+      if ((y + x) % 2 === 0) 
         square.color = "white";
-      }
+
+        //need to rearrange some things so that we can set the pieces up here.
+        // //put pieces on the last 2 rows for player 1
+        // if (y >= 6) makePiece(gameBoard, [y,x], 'normal' , 'player1' , gameBoard.player1Highlight, "https://upload.wikimedia.org/wikipedia/commons/a/ae/Yin_yang.gif");
+        // //put pieces on the first 2 rows for player 2
+        // if (y <= 1) makePiece(gameBoard, [y,x], 'normal' , 'player2' , gameBoard.player2Highlight, "http://graphics.elysiumgates.com/images/peaceindextitlegraphic.gif");        }
+
+      
     })
   })
 })}
